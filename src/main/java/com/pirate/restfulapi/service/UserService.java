@@ -1,9 +1,11 @@
 package com.pirate.restfulapi.service;
 
+import com.pirate.restfulapi.model.Course;
 import com.pirate.restfulapi.model.User;
 import com.pirate.restfulapi.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;

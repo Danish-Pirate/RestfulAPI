@@ -1,22 +1,25 @@
 package com.pirate.restfulapi.api;
 
+import com.pirate.restfulapi.model.Course;
 import com.pirate.restfulapi.model.User;
+import com.pirate.restfulapi.service.CourseService;
 import com.pirate.restfulapi.service.UserService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.Set;
 
 @RestController
 public class API {
     private UserService userService;
+    private CourseService courseService;
 
-    public API(UserService userService) {
+    public API(UserService userService, CourseService courseService) {
         this.userService = userService;
+        this.courseService = courseService;
     }
 
     @GetMapping("/getAllUser")
@@ -40,5 +43,16 @@ public class API {
     public ResponseEntity<Set<User>> editUser(@PathVariable("id") long id, @PathVariable("newName") String newName, @PathVariable("newAge") int newAge) {
         userService.editUser(newName, newAge, id);
         return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
+    }
+
+    @PostMapping("/addCourse")
+    public ResponseEntity<Set<Course>> addCourse(Course course) {
+        courseService.save(course);
+        return new ResponseEntity<>(courseService.findAll(), HttpStatus.OK);
+    }
+
+    @GetMapping("/getAllCourse")
+    public ResponseEntity<Set<Course>> getAllCourse() {
+        return new ResponseEntity<>(courseService.findAll(), HttpStatus.OK);
     }
 }
